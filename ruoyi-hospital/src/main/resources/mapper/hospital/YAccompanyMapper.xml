@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.YAccompanyMapper">
+    
+    <resultMap type="YAccompany" id="YAccompanyResult">
+        <result property="aid"    column="aid"    />
+        <result property="pid"    column="pid"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="census"    column="census"    />
+        <result property="phone"    column="phone"    />
+        <result property="identity"    column="identity"    />
+        <result property="healthcode"    column="healthCode"    />
+        <result property="nat"    column="nat"    />
+        <result property="status"    column="status"    />
+        <result property="operperson"    column="operPerson"    />
+        <result property="operdate"    column="operDate"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectYAccompanyVo">
+        select aid, pid, name, sex, age, idcard, census, phone, identity, healthCode, nat, status, operPerson, operDate, remarks from y_accompany
+    </sql>
+
+    <select id="selectYAccompanyList" parameterType="YAccompany" resultMap="YAccompanyResult">
+        <include refid="selectYAccompanyVo"/>
+        <where>  
+            <if test="pid != null "> and pid = #{pid}</if>
+        </where>
+    </select>
+    
+    <select id="selectYAccompanyById" parameterType="Long" resultMap="YAccompanyResult">
+        <include refid="selectYAccompanyVo"/>
+        where aid = #{aid}
+    </select>
+        
+    <insert id="insertYAccompany" parameterType="YAccompany" useGeneratedKeys="true" keyProperty="aid">
+        insert into y_accompany
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">pid,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="age != null ">age,</if>
+            <if test="idcard != null  and idcard != ''">idcard,</if>
+            <if test="census != null  and census != ''">census,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="identity != null  and identity != ''">identity,</if>
+            <if test="healthcode != null  and healthcode != ''">healthCode,</if>
+            <if test="nat != null  and nat != ''">nat,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="operperson != null  and operperson != ''">operPerson,</if>
+            <if test="operdate != null ">operDate,</if>
+            <if test="remarks != null  and remarks != ''">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">#{pid},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="age != null ">#{age},</if>
+            <if test="idcard != null  and idcard != ''">#{idcard},</if>
+            <if test="census != null  and census != ''">#{census},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="identity != null  and identity != ''">#{identity},</if>
+            <if test="healthcode != null  and healthcode != ''">#{healthcode},</if>
+            <if test="nat != null  and nat != ''">#{nat},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="operperson != null  and operperson != ''">#{operperson},</if>
+            <if test="operdate != null ">#{operdate},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYAccompany" parameterType="YAccompany">
+        update y_accompany
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null ">pid = #{pid},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="age != null ">age = #{age},</if>
+            <if test="idcard != null  and idcard != ''">idcard = #{idcard},</if>
+            <if test="census != null  and census != ''">census = #{census},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="identity != null  and identity != ''">identity = #{identity},</if>
+            <if test="healthcode != null  and healthcode != ''">healthCode = #{healthcode},</if>
+            <if test="nat != null  and nat != ''">nat = #{nat},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="operperson != null  and operperson != ''">operPerson = #{operperson},</if>
+            <if test="operdate != null ">operDate = #{operdate},</if>
+            <if test="remarks != null  ">remarks = #{remarks},</if>
+        </trim>
+        where aid = #{aid}
+    </update>
+
+    <delete id="deleteYAccompanyById" parameterType="Long">
+        delete from y_accompany where aid = #{aid}
+    </delete>
+
+    <delete id="deleteYAccompanyByIds" parameterType="String">
+        delete from y_accompany where aid in 
+        <foreach item="aid" collection="array" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </delete>
+    
+</mapper>

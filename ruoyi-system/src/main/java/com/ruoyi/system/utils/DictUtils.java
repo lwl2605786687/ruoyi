@@ -7,7 +7,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysDictData;
 
 /**
- * 字典工具类
+ * 字典工具类（缓存）
  * 
  * @author ruoyi
  */
