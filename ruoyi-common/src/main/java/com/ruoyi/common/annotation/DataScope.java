@@ -11,7 +11,11 @@ import java.lang.annotation.Target;
  * 
  * @author ruoyi
  */
+
+//注解的使用位置（方法上可用）
 @Target(ElementType.METHOD)
+
+//元注解（修饰注解的注解，运行期可见）
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataScope

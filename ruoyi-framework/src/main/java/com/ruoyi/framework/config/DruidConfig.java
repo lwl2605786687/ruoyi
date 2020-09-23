@@ -32,6 +32,7 @@ import com.ruoyi.framework.datasource.DynamicDataSource;
 @Configuration
 public class DruidConfig
 {
+    //读取配置的数据源
     @Bean
     @ConfigurationProperties("spring.datasource.druid.master")
     public DataSource masterDataSource(DruidProperties druidProperties)
@@ -49,6 +50,16 @@ public class DruidConfig
         return druidProperties.dataSource(dataSource);
     }
 
+    @Bean
+    @ConfigurationProperties("spring.datasource.druid.test")
+    @ConditionalOnProperty(prefix = "spring.datasource.druid.test", name = "enabled", havingValue = "true")
+    public DataSource testDataSource(DruidProperties druidProperties)
+    {
+        DruidDataSource dataSource = DruidDataSourceBuilder.create().build();
+        return druidProperties.dataSource(dataSource);
+    }
+
+    //动态添加(注入)数据源
     @Bean(name = "dynamicDataSource")
     @Primary
     public DynamicDataSource dataSource(DataSource masterDataSource)
@@ -56,6 +67,7 @@ public class DruidConfig
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DataSourceType.MASTER.name(), masterDataSource);
         setDataSource(targetDataSources, DataSourceType.SLAVE.name(), "slaveDataSource");
+        setDataSource(targetDataSources, DataSourceType.TEST.name(), "testDataSource");
         return new DynamicDataSource(masterDataSource, targetDataSources);
     }
 

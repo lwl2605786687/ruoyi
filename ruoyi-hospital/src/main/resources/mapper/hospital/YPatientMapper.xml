@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.YPatientMapper">
+    
+    <resultMap type="YPatient" id="YPatientResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="aid"    column="aid"    />
+        <result property="nid"    column="nid"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="census"    column="census"    />
+        <result property="phone"    column="phone"    />
+        <result property="identity"    column="identity"    />
+        <result property="operperson"    column="operPerson"    />
+        <result property="operdate"    column="operDate"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectYPatientVo">
+        select id, pid, aid, nid, name, sex, age, idcard, census, phone, identity, operPerson, operDate, remarks from y_patient
+    </sql>
+
+    <select id="selectYPatientList" parameterType="YPatient" resultMap="YPatientResult">
+        <include refid="selectYPatientVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="identity != null  and identity != ''"> and identity = #{identity}</if>
+        </where>
+    </select>
+    
+    <select id="selectYPatientById" parameterType="Long" resultMap="YPatientResult">
+        <include refid="selectYPatientVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYPatient" parameterType="YPatient" useGeneratedKeys="true" keyProperty="id">
+        insert into y_patient
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">pid,</if>
+            <if test="aid != null ">aid,</if>
+            <if test="nid != null ">nid,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="age != null ">age,</if>
+            <if test="idcard != null  and idcard != ''">idcard,</if>
+            <if test="census != null  and census != ''">census,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="identity != null  and identity != ''">identity,</if>
+            <if test="operperson != null  and operperson != ''">operPerson,</if>
+            <if test="operdate != null ">operDate,</if>
+            <if test="remarks != null  and remarks != ''">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">#{pid},</if>
+            <if test="aid != null ">#{aid},</if>
+            <if test="nid != null ">#{nid},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="age != null ">#{age},</if>
+            <if test="idcard != null  and idcard != ''">#{idcard},</if>
+            <if test="census != null  and census != ''">#{census},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="identity != null  and identity != ''">#{identity},</if>
+            <if test="operperson != null  and operperson != ''">#{operperson},</if>
+            <if test="operdate != null ">#{operdate},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYPatient" parameterType="YPatient">
+        update y_patient
+        <trim prefix="SET" suffixOverrides=",">
+            <!--<if test="pid != null ">pid = #{pid},</if>
+            <if test="aid != null ">aid = #{aid},</if>
+            <if test="nid != null ">nid = #{nid},</if>-->
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="age != null ">age = #{age},</if>
+            <if test="idcard != null  and idcard != ''">idcard = #{idcard},</if>
+            <if test="census != null  and census != ''">census = #{census},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="identity != null  and identity != ''">identity = #{identity},</if>
+            <if test="operperson != null  and operperson != ''">operPerson = #{operperson},</if>
+            <if test="operdate != null ">operDate = #{operdate},</if>
+            <if test="remarks != null  and remarks != ''">remarks = #{remarks},</if>
+        </trim>
+        where  pid = #{pid} or aid = #{aid} or nid=#{nid}
+    </update>
+
+    <delete id="deleteYPatientById" parameterType="Long">
+        delete from y_patient where id = #{id}
+    </delete>
+
+    <delete id="deleteYPatientByIds" parameterType="String">
+        delete from y_patient where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

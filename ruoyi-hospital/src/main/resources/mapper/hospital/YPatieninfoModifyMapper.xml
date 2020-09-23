@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.YPatieninfoModifyMapper">
+    
+    <resultMap type="YPatieninfoModify" id="YPatieninfoModifyResult">
+        <result property="id"    column="id"    />
+        <result property="modifyid"    column="modifyID"    />
+        <result property="modifyinfo"    column="modifyInfo"    />
+        <result property="operperson"    column="operPerson"    />
+        <result property="operdate"    column="operDate"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectYPatieninfoModifyVo">
+        select id, modifyID, modifyInfo, operPerson, operDate, remarks from y_patieninfo_modify
+    </sql>
+
+    <select id="selectYPatieninfoModifyList" parameterType="YPatieninfoModify" resultMap="YPatieninfoModifyResult">
+        <include refid="selectYPatieninfoModifyVo"/>
+        <where>  
+            <if test="operperson != null  and operperson != ''"> and operPerson = #{operperson}</if>
+            <if test="operdate != null "> and operDate = #{operdate}</if>
+        </where>
+    </select>
+    
+    <select id="selectYPatieninfoModifyById" parameterType="Long" resultMap="YPatieninfoModifyResult">
+        <include refid="selectYPatieninfoModifyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertYPatieninfoModify" parameterType="YPatieninfoModify" useGeneratedKeys="true" keyProperty="id">
+        insert into y_patieninfo_modify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modifyid != null ">modifyID,</if>
+            <if test="modifyinfo != null  and modifyinfo != ''">modifyInfo,</if>
+            <if test="operperson != null  and operperson != ''">operPerson,</if>
+            <if test="operdate != null ">operDate,</if>
+            <if test="remarks != null  and remarks != ''">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modifyid != null ">#{modifyid},</if>
+            <if test="modifyinfo != null  and modifyinfo != ''">#{modifyinfo},</if>
+            <if test="operperson != null  and operperson != ''">#{operperson},</if>
+            <if test="operdate != null ">#{operdate},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYPatieninfoModify" parameterType="YPatieninfoModify">
+        update y_patieninfo_modify
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modifyid != null ">modifyID = #{modifyid},</if>
+            <if test="modifyinfo != null  and modifyinfo != ''">modifyInfo = #{modifyinfo},</if>
+            <if test="operperson != null  and operperson != ''">operPerson = #{operperson},</if>
+            <if test="operdate != null ">operDate = #{operdate},</if>
+            <if test="remarks != null  and remarks != ''">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteYPatieninfoModifyById" parameterType="Long">
+        delete from y_patieninfo_modify where id = #{id}
+    </delete>
+
+    <delete id="deleteYPatieninfoModifyByIds" parameterType="String">
+        delete from y_patieninfo_modify where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

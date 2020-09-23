@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.YNucleateMapper">
+    
+    <resultMap type="YNucleate" id="YNucleateResult">
+        <result property="nid"    column="nid"    />
+        <result property="sampleno"    column="sampleNo"    />
+        <result property="source"    column="source"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="census"    column="census"    />
+        <result property="phone"    column="phone"    />
+        <result property="identity"    column="identity"    />
+        <result property="sampledate"    column="sampleDate"    />
+        <result property="track"    column="track"    />
+        <result property="checkinfo"    column="checkInfo"    />
+        <result property="sampletype"    column="sampleType"    />
+        <result property="samplescore"    column="sampleScore"    />
+        <result property="attackdate"    column="attackDate"    />
+        <result property="screenresult"    column="screenResult"    />
+        <result property="resultdate"    column="resultDate"    />
+        <result property="cost"    column="cost"    />
+        <result property="operperson"    column="operPerson"    />
+        <result property="operdate"    column="operDate"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectYNucleateVo">
+        select nid, sampleNo, source, name, sex, age, idcard, census, phone, identity, sampleDate, track, checkInfo, sampleType, sampleScore, attackDate, screenResult, resultDate, cost, operPerson, operDate, remarks from y_nucleate
+    </sql>
+
+    <select id="selectYNucleateList" parameterType="YNucleate" resultMap="YNucleateResult">
+        <include refid="selectYNucleateVo"/>
+        <where>  
+            <if test="sampleno != null  and sampleno != ''"> and sampleNo = #{sampleno}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="identity != null  and identity != ''"> and identity = #{identity}</if>
+            <!--<if test="sampledate != null "> and sampleDate = #{sampledate}</if>-->
+            <if test="params.beginSampledate != null and params.beginSampledate != ''"><!-- 开始时间检索 -->
+                and date_format(sampleDate,'%y%m%d') &gt;= date_format(#{params.beginSampledate},'%y%m%d')
+            </if>
+            <if test="params.endSampledate != null and params.endSampledate != ''"><!-- 结束时间检索 -->
+                and date_format(sampleDate,'%y%m%d') &lt;= date_format(#{params.endSampledate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectYNucleateById" parameterType="Long" resultMap="YNucleateResult">
+        <include refid="selectYNucleateVo"/>
+        where nid = #{nid}
+    </select>
+        
+    <insert id="insertYNucleate" parameterType="YNucleate" useGeneratedKeys="true" keyProperty="nid">
+        insert into y_nucleate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sampleno != null  and sampleno != ''">sampleNo,</if>
+            <if test="source != null  and source != ''">source,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="age != null ">age,</if>
+            <if test="idcard != null  and idcard != ''">idcard,</if>
+            <if test="census != null  and census != ''">census,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="identity != null  and identity != ''">identity,</if>
+            <if test="sampledate != null ">sampleDate,</if>
+            <if test="track != null  and track != ''">track,</if>
+            <if test="checkinfo != null  and checkinfo != ''">checkInfo,</if>
+            <if test="sampletype != null  and sampletype != ''">sampleType,</if>
+            <if test="samplescore != null  and samplescore != ''">sampleScore,</if>
+            <if test="attackdate != null ">attackDate,</if>
+            <if test="screenresult != null  and screenresult != ''">screenResult,</if>
+            <if test="resultdate != null ">resultDate,</if>
+            <if test="cost != null  and cost != ''">cost,</if>
+            <if test="operperson != null  and operperson != ''">operPerson,</if>
+            <if test="operdate != null ">operDate,</if>
+            <if test="remarks != null  and remarks != ''">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sampleno != null  and sampleno != ''">#{sampleno},</if>
+            <if test="source != null  and source != ''">#{source},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="age != null ">#{age},</if>
+            <if test="idcard != null  and idcard != ''">#{idcard},</if>
+            <if test="census != null  and census != ''">#{census},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="identity != null  and identity != ''">#{identity},</if>
+            <if test="sampledate != null ">#{sampledate},</if>
+            <if test="track != null  and track != ''">#{track},</if>
+            <if test="checkinfo != null  and checkinfo != ''">#{checkinfo},</if>
+            <if test="sampletype != null  and sampletype != ''">#{sampletype},</if>
+            <if test="samplescore != null  and samplescore != ''">#{samplescore},</if>
+            <if test="attackdate != null ">#{attackdate},</if>
+            <if test="screenresult != null  and screenresult != ''">#{screenresult},</if>
+            <if test="resultdate != null ">#{resultdate},</if>
+            <if test="cost != null  and cost != ''">#{cost},</if>
+            <if test="operperson != null  and operperson != ''">#{operperson},</if>
+            <if test="operdate != null ">#{operdate},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYNucleate" parameterType="YNucleate">
+        update y_nucleate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sampleno != null  and sampleno != ''">sampleNo = #{sampleno},</if>
+            <if test="source != null  and source != ''">source = #{source},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="age != null ">age = #{age},</if>
+            <if test="idcard != null  and idcard != ''">idcard = #{idcard},</if>
+            <if test="census != null  and census != ''">census = #{census},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="identity != null  and identity != ''">identity = #{identity},</if>
+            <if test="sampledate != null ">sampleDate = #{sampledate},</if>
+            <if test="track != null  and track != ''">track = #{track},</if>
+            <if test="checkinfo != null  and checkinfo != ''">checkInfo = #{checkinfo},</if>
+            <if test="sampletype != null  and sampletype != ''">sampleType = #{sampletype},</if>
+            <if test="samplescore != null  and samplescore != ''">sampleScore = #{samplescore},</if>
+            <if test="attackdate != null ">attackDate = #{attackdate},</if>
+            <if test="screenresult != null  and screenresult != ''">screenResult = #{screenresult},</if>
+            <if test="resultdate != null ">resultDate = #{resultdate},</if>
+            <if test="cost != null  and cost != ''">cost = #{cost},</if>
+            <if test="operperson != null  and operperson != ''">operPerson = #{operperson},</if>
+            <if test="operdate != null ">operDate = #{operdate},</if>
+            <if test="remarks != null  ">remarks = #{remarks},</if>
+        </trim>
+        where nid = #{nid}
+    </update>
+
+    <delete id="deleteYNucleateById" parameterType="Long">
+        delete from y_nucleate where nid = #{nid}
+    </delete>
+
+    <delete id="deleteYNucleateByIds" parameterType="String">
+        delete from y_nucleate where nid in 
+        <foreach item="nid" collection="array" open="(" separator="," close=")">
+            #{nid}
+        </foreach>
+    </delete>
+    
+</mapper>

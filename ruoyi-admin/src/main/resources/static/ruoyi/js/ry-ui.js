@@ -762,7 +762,7 @@ var table = {
             		shade: 0.3,
             		title: title,
             		content: url,
-            		btn: ['确定', '关闭'],
+            		btn: ['确认', '关闭'],
             	    // 弹层外区域关闭
             		shadeClose: true,
             		yes: callback,
@@ -926,7 +926,6 @@ var table = {
        				height: _height,
        				url: _url,
        				skin: 'layui-layer-gray', 
-       				btn: ['关闭'],
        				yes: function (index, layero) {
        	                layer.close(index);
                     }

@@ -76,6 +76,12 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-system</artifactId>
         </dependency>
+
+		<!-- 医院模块-->
+		<dependency>
+			<groupId>com.ruoyi</groupId>
+			<artifactId>ruoyi-hospital</artifactId>
+		</dependency>
 		
 		<!-- 获取系统信息 -->
 		<dependency>
